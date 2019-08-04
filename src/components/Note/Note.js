@@ -6,24 +6,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Note.css'
 import propTypes from 'prop-types'
 
-
-
  export default class Note extends React.Component {
+   constructor(){
+     super();
+     this.state={}
+   }
   static contextType = NotefulContext 
 
   handleDeleteNote(noteId, callback) {
     fetch(`http://localhost:8000/api/notes/${noteId}`,{
       method: 'DELETE',
-      headers: {'content-type': 'application/json'},
+      headers: {
+        'content-type': 'application/json'
+      },
     })
-    .then(res=> {
+    .then(res=> { 
       if(!res.ok){
         return res.json().then(error => {
           throw error
         })
       }
-      return res.json()
-    })
+    }
+    )
     .then(note => {
       callback(noteId)
     })
@@ -38,7 +42,7 @@ import propTypes from 'prop-types'
     <div className='Note'>
       <h2 className='Note__title'>
         <Link to={`/notes/${this.props.id}`}>
-          {this.props.name}
+          {this.props.title}
         </Link>
       </h2>
       <button className='Note__delete' type='button' onClick={() => this.handleDeleteNote(this.props.id, this.context.deleteNote)}>
@@ -51,22 +55,21 @@ import propTypes from 'prop-types'
           Modified
           {' '}
           <span className='Date'>
-            {format(this.props.modified, 'Do MMM YYYY')}
+            {format(this.props.date_modified, 'Do MMM YYYY')}
           </span>
         </div>
       </div>
     </div>
-  )
-}
+  )}
 }
 
 Note.defaultProps = {
-  modified: '',
-  name: '',
+  date_modified: '',
+  title: '',
   id: ''
 }
 Note.propTypes = {
-  modified: propTypes.string.isRequired,
-  name: propTypes.string.isRequired,
-  id: propTypes.string.isRequired
+  date_modified: propTypes.string.isRequired,
+  title: propTypes.string.isRequired,
+  id: propTypes.number.isRequired
 }

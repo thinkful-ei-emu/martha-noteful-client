@@ -5,28 +5,22 @@ import ValidationError from '../../ValidationError';
 
 class NoteAddForm extends React.Component {
   state = {
-      title : {
-      value: '',
-        touched: false
-      },
-      description: '',
+      title : '',
+      content: '',
       folders: ''
     };
 
   static contextType = NotefulContext
 
-  updateTitle= (title) => {
+  updateTitle= (e) => {
     this.setState({
-      title: {
-        value: title,
-        touched: true,
-      }
+      title: e
     });
   };
 
   onDescriptionChange=(e)=>{
     this.setState({
-      description: e.target.value
+      content: e.target.value
     })
   }
   onFolderSelect=(e)=>{
@@ -36,13 +30,13 @@ class NoteAddForm extends React.Component {
   }
   handleForm=(e)=>{
     e.preventDefault()
-    const { title, description, folders } = e.target
+    const { title, content, folders } = this.state
     const note = {
-      name: title.value,
-      content: description.value,
-      folderId: folders.value,
+      title: title,
+      content: content,
+      folder_id: folders,
       id: cuid(),
-      modified: new Date()
+      date_modified: new Date()
     }
     fetch('http://localhost:8000/api/notes', {
       method: 'POST',
@@ -58,7 +52,7 @@ class NoteAddForm extends React.Component {
     })
     .then(data => {
       title.value = ''
-      description.value=''
+      content.value=''
       this.context.addNote(data)
       this.props.history.push('/')
     })
@@ -68,8 +62,8 @@ class NoteAddForm extends React.Component {
   }
 
   validateTitle(){
-    const name = this.state.title.value;
-    if (name.length === 0 ){
+    const title = this.state.title;
+    if (title.length === 0 ){
       return 'A title is required'
     }
   }
@@ -77,36 +71,39 @@ class NoteAddForm extends React.Component {
   render(){
     const titleError = this.validateTitle();
     const folderChoice = this.context.folders.map((folder, index) => 
-    <>
+    <div key={index}>
       <input 
+        name='folder'
         key={index} 
-        name="folders" 
+        title="folders" 
         type="radio" 
         value={folder.id} 
         onChange ={this.onFolderSelect}>
       </input>
-    <label>{folder.title}</label><br/></>)
+      <label>{folder.title}</label><br/>
+    </div>)
 
     return (
     <div>
       <form onSubmit = {e => this.handleForm(e)}>
       <h3>Add A Note Form</h3>
       <label>Folder Choice:</label>
+      <br/>
         { folderChoice }
       <label htmlFor="title">Title:</label>
       <input 
         placeholder='title' 
-        name="title" 
+        title="title" 
         type="text" 
         onChange={e => this.updateTitle(e.target.value)}>
       </input>
       {this.state.title.touched && (
       <ValidationError message={titleError}/>
       )}
-  
+      Content:
       <textarea 
-        placeholder='description' 
-        name="description" 
+        placeholder='content' 
+        title="content" 
         type="text" 
         onChange={this.onDescriptionChange}>
       </textarea><br/>

@@ -17,12 +17,12 @@ export default class NotePageMain extends React.Component {
     <section className='NotePageMain'>
       <Note
         id={note.id}
-        name={note.title}
-        modified={note.date_modified}
+        title={note.title}
+        date_modified={note.date_modified}
       />
       <div className='NotePageMain__content'>
         {note.content.split(/\n \r|\n/).map((para, i) =>
-          <p key={i}>{para}</p>
+          <p key={i}>Content: {para}</p>
         )}
       </div>
     </section>

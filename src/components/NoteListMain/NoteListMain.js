@@ -10,27 +10,34 @@ import propTypes from 'prop-types'
 export default class NoteListMain extends React.Component {
   static contextType = NotefulContext;
   render() {
-    return (
+      return (
       <section className="NoteListMain">
         <ul>
           {this.props.match.path === "/"
-            ? this.context.notes.map(note => (
+            ? this.context.notes.map(note => 
+              (
                 <li key={note.id}>
                   <Note
+                    key={note.id}
                     id={note.id}
-                    name={note.title}
-                    modified={note.date_modified}
+                    title={note.title}
+                    content={note.content}
+                    date_modified={note.date_modified}
+                    folder_id={note.folder_id}
                   />
                 </li>
               ))
             : this.context.notes
-                .filter(note => note.folderId === this.props.match.params.folderId)
-                .map(note => (
+                .filter(note => note.folder_id.toString() === this.props.match.params.folderId)
+                .map(note =>
+                  (
                   <li key={note.id}>
                     <Note
                       id={note.id}
-                      name={note.title}
-                      modified={note.date_modified}
+                      title={note.title}
+                      content={note.content}
+                      date_modified={note.date_modified}
+                      folder_id={note.folder_id}
                     />
                   </li>
                 ))}
@@ -56,7 +63,7 @@ NoteListMain.propTypes = {
   match: propTypes.shape({
     path: propTypes.string, 
     params: propTypes.shape({
-      folderId: propTypes.string
+    folder_id: propTypes.string
     })
   })
 }

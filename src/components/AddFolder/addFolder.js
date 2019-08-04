@@ -5,22 +5,22 @@ export default class AddFolder extends React.Component{
   constructor(){
     super();
   this.state={
-    name: ''
+    title: ''
   }
 }
   static contextType = NotefulContext
 
-  onNameChange = (name) => {
+  onNameChange = (title) => {
     this.setState({
-      name: {value: name}
+      title: {value: title}
     });
   } 
 
   handleAddForm = (e) => {
     e.preventDefault()
-    const { name } = this.state
+    const { title } = this.state
     const folder = {
-      name: name.value,
+      title: title.value,
     }
     fetch('http://localhost:8000/api/folders', {
       method: 'POST',
@@ -35,7 +35,7 @@ export default class AddFolder extends React.Component{
       return res.json()
     })
     .then(data => {
-      name.value = ''
+      title.value = ''
       this.context.addFolder(data)
       this.props.history.push('/')
     })
@@ -49,7 +49,7 @@ export default class AddFolder extends React.Component{
     <div>
     <form onSubmit={this.handleAddForm}>
     <h4>Add a Folder Form</h4>
-      <input placeholder="Folder name" name="name" type="text"  id="name" onChange={e => this.onNameChange(e.target.value)}></input> 
+      <input placeholder="Folder name" title="title" type="text"  id="title" onChange={e => this.onNameChange(e.target.value)}></input> 
       <button>Submit</button>
     </form>
     </div>

@@ -9,6 +9,7 @@ import NotefulContext from "../NotefulContext";
 import NoteAddForm  from '../components/NotefulForm/NoteAddForm';
 import NotefulError from '../NotefulError';
 import AddFolder from '../components/AddFolder/addFolder'
+//import config from '../config';
 import "./App.css";
 
 class App extends Component {
@@ -26,16 +27,18 @@ class App extends Component {
       notes: newNotes
     });
   };
+
   addNote = note => {
     this.setState({
       notes: [...this.state.notes, note]
     })
-  }
+  };
+
   addFolder = folder => {
     this.setState({
       folders: [...this.state.folders, folder]
     })
-  }
+  };
 
   componentDidMount() {
     fetch('http://localhost:8000/api/folders')
@@ -67,10 +70,10 @@ class App extends Component {
   renderMainRoutes() {
     return (
       <>
-        {["/", "/folder/:folderId"].map(path => (
+        {["/", "/folders/:folderId"].map(path => (
           <Route exact key={path} path={path} component={NoteListMain} />
         ))}
-        <Route path="/note/:noteId" component={NotePageMain} />
+        <Route path="/notes/:noteId" component={NotePageMain} />
       </>
     );
   }
