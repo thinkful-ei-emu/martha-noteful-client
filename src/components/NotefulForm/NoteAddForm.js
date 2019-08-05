@@ -2,6 +2,7 @@ import React from 'react'
 import NotefulContext from '../../NotefulContext'
 import cuid from 'cuid'
 import ValidationError from '../../ValidationError';
+import config from '../../config';
 
 class NoteAddForm extends React.Component {
   state = {
@@ -38,7 +39,7 @@ class NoteAddForm extends React.Component {
       id: cuid(),
       date_modified: new Date()
     }
-    fetch('http://localhost:8000/api/notes', {
+    fetch(`${config.API_ENDPOINT}/api/notes`, {
       method: 'POST',
       body: JSON.stringify(note),
       headers: {

@@ -9,7 +9,7 @@ import NotefulContext from "../NotefulContext";
 import NoteAddForm  from '../components/NotefulForm/NoteAddForm';
 import NotefulError from '../NotefulError';
 import AddFolder from '../components/AddFolder/addFolder'
-//import config from '../config';
+import config from '../config';
 import "./App.css";
 
 class App extends Component {
@@ -41,13 +41,13 @@ class App extends Component {
   };
 
   componentDidMount() {
-    fetch('http://localhost:8000/api/folders')
+    fetch(`${config.API_ENDPOINT}/api/folders`)
         .then(res=> res.json())
         .then(folders => this.setState({
             folders: folders
         }))
 
-        fetch('http://localhost:8000/api/notes')
+        fetch(`${config.API_ENDPOINT}/api/notes`)
         .then(res=> res.json())
         .then(notes => this.setState({
             notes: notes

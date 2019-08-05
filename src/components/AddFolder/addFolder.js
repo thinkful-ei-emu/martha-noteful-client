@@ -1,5 +1,6 @@
 import React from 'react'
 import NotefulContext from '../../NotefulContext'
+import config from '../../config';
 
 export default class AddFolder extends React.Component{
   constructor(){
@@ -22,7 +23,7 @@ export default class AddFolder extends React.Component{
     const folder = {
       title: title.value,
     }
-    fetch('http://localhost:8000/api/folders', {
+    fetch(`${config.API_ENDPOINT}/api/folders`, {
       method: 'POST',
       body: JSON.stringify(folder),
       headers: {
