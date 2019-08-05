@@ -50,12 +50,14 @@ class NoteAddForm extends React.Component {
       }
       return res.json()
     })
-    .then(data => {
-      title.value = ''
-      content.value=''
-      this.context.addNote(data)
+    .then(res => 
+      {
+      this.title= ''
+      this.content=''
+      this.context.addNote(res)
       this.props.history.push('/')
-    })
+    }
+    )
     .catch(error => {
       this.setState({ error })
     })
@@ -85,7 +87,7 @@ class NoteAddForm extends React.Component {
 
     return (
     <div>
-      <form onSubmit = {e => this.handleForm(e)}>
+      <form onSubmit = {this.handleForm}>
       <h3>Add A Note Form</h3>
       <label>Folder Choice:</label>
       <br/>

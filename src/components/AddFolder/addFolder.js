@@ -27,7 +27,7 @@ export default class AddFolder extends React.Component{
       body: JSON.stringify(folder),
       headers: {
         'content-type': 'application/json',
-      }})
+       }})
     .then(res => {
       if(!res.ok){
         return res.json().then(error => {throw error})
