@@ -1,4 +1,9 @@
+
+
 export default {
-  API_ENDPOINT: 'https://polar-depths-46444.herokuapp.com',
+
+  //API_ENDPOINT: `http://localhost:8000`,
+  
+  API_ENDPOINT: `https://enigmatic-brook-41939.herokuapp.com`,
   TOKEN_KEY: process.env.REACT_APP_API_KEY,
 }
