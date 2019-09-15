@@ -17,14 +17,11 @@ import propTypes from 'prop-types'
   handleDeleteNote(noteId, callback){
     fetch(`${config.API_ENDPOINT}/api/notes/${noteId}`,{
       method: 'DELETE',
-      headers: {
-        'content-type': 'application/json',
-      }})
+      })
     .then(res=> { 
       if(!res.ok){
         return res.json().then(error => {throw error})
       }
-      return res.json()
     })
     .then(note => {
       callback(noteId)
