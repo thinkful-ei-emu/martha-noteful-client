@@ -14,21 +14,18 @@ import propTypes from 'prop-types'
    }
   static contextType = NotefulContext 
 
-  handleDeleteNote(noteId, callback) {
+  handleDeleteNote(noteId, callback){
     fetch(`${config.API_ENDPOINT}/api/notes/${noteId}`,{
       method: 'DELETE',
       headers: {
-        'content-type': 'application/json'
-      },
-    })
+        'content-type': 'application/json',
+      }})
     .then(res=> { 
       if(!res.ok){
-        return res.json().then(error => {
-          throw error
-        })
+        return res.json().then(error => {throw error})
       }
-    }
-    )
+      return res.json()
+    })
     .then(note => {
       callback(noteId)
     })
