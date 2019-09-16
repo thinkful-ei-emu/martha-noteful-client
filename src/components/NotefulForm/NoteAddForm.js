@@ -81,6 +81,7 @@ class NoteAddForm extends React.Component {
         title="folders" 
         type="radio" 
         value={folder.id} 
+        required
         onChange ={this.onFolderSelect}>
       </input>
       <label>{folder.title}</label><br/>
@@ -98,6 +99,7 @@ class NoteAddForm extends React.Component {
         placeholder='title' 
         title="title" 
         type="text" 
+        required
         onChange={e => this.updateTitle(e.target.value)}>
       </input>
       {this.state.title.touched && (
@@ -108,6 +110,7 @@ class NoteAddForm extends React.Component {
         placeholder='content' 
         title="content" 
         type="text" 
+        required
         onChange={this.onDescriptionChange}>
       </textarea><br/>
     
